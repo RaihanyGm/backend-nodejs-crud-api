@@ -15,7 +15,6 @@ exports.getAllTarefa = async (req, res) => {
     res.status(200).json({ 
        sucesso: true,
        mensagem: 'Tarefa recuperada com sucesso',
-       dados: tarefas, 
        paginas: {page, limit }});
   } catch (error) {
     console.error('Erro em getAllTarefa:', error);
