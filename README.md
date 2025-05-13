@@ -1,4 +1,7 @@
-# API crud de tarefas usando Node.js, Express e MySQL
+# API crud de tarefas usando Node.js, Express e MySQL 
+
+> **🚧 Em desenvolvimento**     
+> **Projeto criado para um processo seletivo (não fui aprovada, mas o projeto será mantido e aprimorado)**
 
 "Não é só inovando que mostra habilidade, mas sim dominando o clássico que prova capacidade."
 
@@ -10,8 +13,6 @@ API RESTful para gerenciamento de tarefas. Permite criar, listar, atualizar e de
 - Node.js
 - Express.js
 - MySQL
-- Body-Parser
-- CORS
 - dotenv
 
 ## Como Executar o Projeto
