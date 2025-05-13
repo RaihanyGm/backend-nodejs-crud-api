@@ -91,3 +91,5 @@ Content-Type: application/json
   "titulo": "Título da tarefa",
   "descricao": "Descrição da tarefa"
 }
+``````
+Projeto feito por [RaihanyGm](https://github.com/RaihanyGm) para fins de participação de processo seletivo e estudos.
