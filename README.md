@@ -13,7 +13,7 @@ API RESTful para gerenciamento de tarefas. Permite criar, listar, atualizar e de
 - Node.js
 - Express.js
 - MySQL
-- dotenv
+- Postman
 
 ## Como Executar o Projeto
 
