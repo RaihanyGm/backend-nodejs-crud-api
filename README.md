@@ -1,7 +1,7 @@
 # API crud de tarefas usando Node.js, Express e MySQL 
 
 > **🚧 Em desenvolvimento**     
-> **Projeto criado para um processo seletivo (não fui aprovada, mas o projeto será mantido e aprimorado)**
+> **Projeto criado para um processo seletivo. Atualmente estou aprimorando funcionalidades, arquitetura e documentação para evolução contínua.**
 
 "Não é só inovando que mostra habilidade, mas sim dominando o clássico que prova capacidade."
 
