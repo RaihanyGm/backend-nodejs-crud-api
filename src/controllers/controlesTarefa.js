@@ -18,7 +18,7 @@ exports.getAllTarefa = async (req, res) => {
 
   } catch (error) {
     console.error('Erro em getAllTarefa:', error);
-    return response.error(res, 500, 'Erro interno ao buscar tarefas', error.message);
+    return response.error(res, 500, 'Erro interno ao buscar tarefas', error);
   }
 };
 
