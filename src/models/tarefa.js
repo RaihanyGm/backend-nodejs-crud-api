@@ -1,4 +1,4 @@
-const database = require('../config/database');
+const db = require('../config/database');
 
 exports.getAll = async (page, limit) => {
   const offset = (page - 1) * limit;
