@@ -1,122 +1,104 @@
-var TarefaModel = require('../models/tarefa'); 
+const tarefaService = require('../services/tarefaService');
+const response = require('../utils/response');
 
 exports.getAllTarefa = async (req, res) => {
   try {
     let { page = 1, limit = 10 } = req.query;
+
     page = parseInt(page);
     limit = parseInt(limit);
+
     if (isNaN(page) || isNaN(limit) || page < 1 || limit < 1) {
-      return res.status(400).json({
-        sucesso: false, 
-        mensagem: 'Paginação inválida. Use o número maior que 0.'});
+      return response.error(res, 400, 'Paginação inválida. Use números maiores que 0.');
     }
 
-    var tarefas = await TarefaModel.getAll(page, limit);
-    res.status(200).json({ 
-       sucesso: true,
-       mensagem: 'Tarefa recuperada com sucesso',
-       paginas: {page, limit }});
+    const tarefas = await tarefaService.getAll(page, limit);
+
+    return response.success(res, 200, 'Tarefas listadas com sucesso', tarefas);
+
   } catch (error) {
     console.error('Erro em getAllTarefa:', error);
-    res.status(500).json({ 
-       sucesso: false,
-       mensagem: 'Erro interno ao buscar tarefa'});
+    return response.error(res, 500, 'Erro interno ao buscar tarefas', error.message);
   }
 };
 
 exports.getByIdTarefa = async (req, res) => {
   try {
-    var { id_crud } = req.params;
+    const { id_crud } = req.params;
+
     if (!id_crud || isNaN(id_crud)) {
-      return res.status(400).json({ 
-        sucesso: false,
-        mensagem: 'Erro ao encontrar a id'});
+      return response.error(res, 400, 'ID inválido');
     }
 
-    var tarefa = await TarefaModel.getById(id_crud);
+    const tarefa = await tarefaService.getById(id_crud);
+
     if (!tarefa) {
-      return res.status(404).json({ 
-        sucesso: false,
-        mensagem: 'Tarefa não encontrada'});
+      return response.error(res, 404, 'Tarefa não encontrada');
     }
-    res.status(200).json({ 
-      sucesso: true,
-      mensagem: 'Tarefa encontrada',
-      dados: tarefa});
+
+    return response.success(res, 200, 'Tarefa encontrada', tarefa);
+
   } catch (error) {
     console.error('Erro em getByIdTarefa:', error);
-    res.status(500).json({ 
-      sucesso: false,
-      mensagem: ' Erro ao encontra tarefa'});
+    return response.error(res, 500, 'Erro interno ao buscar tarefa', error.message);
   }
 };
 
 exports.createTarefa = async (req, res) => {
   try {
-    var { titulo, descricao } = req.body;
+    const { titulo, descricao } = req.body;
+
     if (!titulo || !descricao) {
-      return res.status(400).json({
-        sucesso: false,
-        mensagem: 'Titulo é obrigatório'});
+      return response.error(res, 400, 'Título e descrição são obrigatórios');
     }
-    
-    var novaTarefa = await TarefaModel.create(titulo, descricao);
-    res.status(201).json({ 
-      sucesso: true,
-      mensagem: 'Tarefa criada com sucesso'});
+
+    const id = await tarefaService.create(titulo, descricao);
+
+    return response.success(res, 201, 'Tarefa criada com sucesso', { id });
+
   } catch (error) {
     console.error('Erro em createTarefa:', error);
-    res.status(500).json({
-      sucesso: false,
-      mensagem: 'Erro ao criar tarefa'});
+    return response.error(res, 500, 'Erro ao criar tarefa', error.message);
   }
 };
 
 exports.updateTarefa = async (req, res) => {
   try {
-    var { id_crud } = req.params;
-    var { titulo, descricao } = req.body;
-    
+    const { id_crud } = req.params;
+    const { titulo, descricao } = req.body;
+
     if (!id_crud || isNaN(id_crud)) {
-      return res.status(400).json({
-        sucesso: false,
-        mensagem: 'ID não encontrado'});
-    }
-    if (!titulo || !descricao) {
-      return res.status(400).json({ 
-        sucesso: false,
-        mensagem: 'Título é obrigatório' });
+      return response.error(res, 400, 'ID inválido');
     }
 
-    var putTarefa = await TarefaModel.update(id_crud, titulo, descricao);
-    res.status(200).json({ 
-      sucesso: true,
-      mensagem: 'Tarefa renomeada com sucesso'});
+    if (!titulo || !descricao) {
+      return response.error(res, 400, 'Título e descrição são obrigatórios');
+    }
+
+    await tarefaService.update(id_crud, titulo, descricao);
+
+    return response.success(res, 200, 'Tarefa atualizada com sucesso');
+
   } catch (error) {
     console.error('Erro em updateTarefa:', error);
-    res.status(500).json({ 
-      sucesso: false,
-      mensagem: 'Erro ao atualizar tarefa'});
+    return response.error(res, 500, 'Erro ao atualizar tarefa', error.message);
   }
 };
 
 exports.deleteTarefa = async (req, res) => {
   try {
-    var { id_crud } = req.params;
+    const { id_crud } = req.params;
+
     if (!id_crud || isNaN(id_crud)) {
-      return res.status(400).json({ 
-        sucesso: false,
-        mensagem: 'ID não encontrado' });
+      return response.error(res, 400, 'ID inválido');
     }
 
-    var deleteTarefa = await TarefaModel.delete(id_crud);
-    res.status(200).json({ 
-      sucesso: true,
-      mensagem: 'Tarefa deletada com sucesso'});
+    await tarefaService.delete(id_crud);
+
+    return response.success(res, 200, 'Tarefa deletada com sucesso');
+
   } catch (error) {
     console.error('Erro em deleteTarefa:', error);
-    res.status(500).json({ 
-      sucesso: false,
-      mensagem: 'Erro ao deletar tarefa'});
+    return response.error(res, 500, 'Erro ao deletar tarefa', error.message);
   }
 };
